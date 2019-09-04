@@ -25,6 +25,43 @@ SECRET_KEY = '!q7frn8(#proxh@w8l--w_bp6^m0d5$1-$z7e07an-7dfe2*u*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+# LOGGING = {
+#      'version': 1,
+#      'disable_existing_loggers': False,
+#      'formatters': {
+#          'verbose': {
+#              'format': '%(asctime)s-%(module)s-%(levelname)s :: %(message)s'
+#          },
+#          'simple': {
+#              'format': '%(levelname)s :: %(message)s'
+#          }
+#      },
+#      'handlers': {
+#            'console': {
+#              'level': 'DEBUG',
+#              'class': 'logging.StreamHandler',
+#              'formatter': 'verbose'
+#          },
+#      },
+#      'loggers': {
+#          'django': {
+#              'handlers': ['console'],
+#              'propagate': False,
+#              'level': 'DEBUG'
+#          },
+#         'django': {
+#             'handlers': ['console'],
+#             'propagate': False,
+#             'level': 'DEBUG'
+#         },
+#      }
+#  }
+
+
+
+
+
 ALLOWED_HOSTS = []
 
 

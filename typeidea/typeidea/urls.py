@@ -16,6 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+
+
+import sys
+sys.path.append('..')
+from blog.custom_site import custom_site
+
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^super_admin/', admin.site.urls),
+    url(r'^admin/', custom_site.urls),
 ]
