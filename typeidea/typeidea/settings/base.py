@@ -15,6 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -26,37 +27,33 @@ SECRET_KEY = '!q7frn8(#proxh@w8l--w_bp6^m0d5$1-$z7e07an-7dfe2*u*'
 DEBUG = True
 
 
-# LOGGING = {
-#      'version': 1,
-#      'disable_existing_loggers': False,
-#      'formatters': {
-#          'verbose': {
-#              'format': '%(asctime)s-%(module)s-%(levelname)s :: %(message)s'
-#          },
-#          'simple': {
-#              'format': '%(levelname)s :: %(message)s'
-#          }
-#      },
-#      'handlers': {
-#            'console': {
-#              'level': 'DEBUG',
-#              'class': 'logging.StreamHandler',
-#              'formatter': 'verbose'
-#          },
-#      },
-#      'loggers': {
-#          'django': {
-#              'handlers': ['console'],
-#              'propagate': False,
-#              'level': 'DEBUG'
-#          },
-#         'django': {
-#             'handlers': ['console'],
-#             'propagate': False,
-#             'level': 'DEBUG'
-#         },
-#      }
-#  }
+LOGGING = {
+     'version': 1,
+     'disable_existing_loggers': False,
+     'formatters': {
+         'verbose': {
+             'format': '{asctime} {module}.{funcName} {lineno:3} {levelname:7} => {message}',
+             'style': '{',
+         },
+         'simple': {
+             'format': '%(levelname)s :: %(message)s'
+         }
+     },
+     'handlers': {
+           'console': {
+             'level': 'DEBUG',
+             'class': 'logging.StreamHandler',
+             'formatter': 'verbose'
+         },
+     },
+     'loggers': {
+         'django': {
+             'handlers': ['console'],
+             'propagate': False,
+             'level': 'DEBUG'
+         },
+     }
+ }
 
 
 
@@ -94,7 +91,7 @@ ROOT_URLCONF = 'typeidea.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

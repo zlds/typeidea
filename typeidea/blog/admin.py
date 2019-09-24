@@ -1,8 +1,10 @@
 from django.contrib import admin
+from django.contrib.admin.models import LogEntry
 from django.shortcuts import reverse
 from django.utils.html import format_html
 from .adminforms import PostAdmin
 from .custom_site import custom_site
+
 
 import sys
 sys.path.append("..")
@@ -10,6 +12,7 @@ sys.path.append("..")
 from .models import Category, Tag, Post
 from comment.models import Comment
 from config.models import Link, SideBar
+from .base_admin import BaseOwnerAdmin
 # Register your models here.
 
 
@@ -40,11 +43,6 @@ class CategoryAdmin(admin.ModelAdmin):
     #编辑页面字段
     fields = ('name', 'status', 'is_nav')
 
-    def save_model(self, request, obj, form, change):
-        print(dir(request))
-        obj.owner = request.user
-        return super(CategoryAdmin, self).save_model(request, obj, form, change)
-
     def post_count(self, obj):
         return obj.post_set.count()
     post_count.short_description = "文章数量"
@@ -54,19 +52,15 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'status', 'created_time', 'owner')
     fields = ('name', 'status')
 
-    def save_model(self, request, obj, form, change):
-        # obj.owner = request.user
-        return super(TagAdmin, self).save_model(request, obj, form, change)
-
 @admin.register(Post, site=custom_site)
 class PostAdmin(admin.ModelAdmin):
-    # form = PostAdmin
+    form = PostAdmin
     list_display = [
         'title', 'category', 'status',
         'created_time', 'owner', 'operator'
     ]
     list_filter = [CategoryOwnerFilter]
-    # list_display_links = []
+    list_display_links = []
     #可以通过那些字段可以搜索
     search_fields = ['title', 'category__name']
 
@@ -109,14 +103,6 @@ class PostAdmin(admin.ModelAdmin):
         )
     operator.short_description = '操作'
 
-    def save_model(self, request, obj, form, change):
-        print(request)
-        print(obj)
-        print(form)
-        print(change)
-        obj.owner = request.user
-        return super(PostAdmin, self).save_model(request, obj, form, change)
-
     def get_queryset(self, request):
         qs = super(PostAdmin, self).get_queryset(request)
         return qs.filter(owner=request.user)
@@ -148,3 +134,8 @@ class SideBarAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
         return super(SideBar, self).save_model(request, obj, form, change)
+
+@admin.register(LogEntry, site=custom_site)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ['object_repr', 'object_id', 'action_flag', 'user',
+                    'change_message']
